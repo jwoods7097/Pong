@@ -6,11 +6,10 @@ public class Paddle {
     public static final int WIDTH = 15;
 
     private int x;
-    private int y;
+    public int y = (Window.WINDOW_HEIGHT - HEIGHT) / 2;
 
     Paddle(int x) {
         this.x = x;
-        y = (Window.WINDOW_HEIGHT - HEIGHT) / 2;
     }
 
     public void draw(Graphics2D g) {

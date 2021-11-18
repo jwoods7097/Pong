@@ -3,10 +3,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
-public class Game extends JPanel implements ActionListener {
+public class Game extends JPanel implements ActionListener, KeyListener {
 
     JLabel p1;
     JLabel p2;
@@ -21,9 +23,16 @@ public class Game extends JPanel implements ActionListener {
     private int p1Score;
     private int p2Score;
 
+    private int yVel;
+    private int indicator;
+
     // Initial setup of graphics and game settings
     public Game() {
         timer.start();
+
+        addKeyListener(this);
+        setFocusTraversalKeysEnabled(false);
+        setFocusable(true);
 
         p1Score = 0;
         p2Score = 0;
@@ -35,7 +44,6 @@ public class Game extends JPanel implements ActionListener {
         p1.setFont(new Font(p1.getFont().getName(), Font.PLAIN, 60));
         p1.setForeground(Color.white);
         this.add(p1);
-
         p2 = new JLabel("" + p2Score);
         p2.setSize(60, 60);
         p2.setLocation(540, 0);
@@ -52,7 +60,6 @@ public class Game extends JPanel implements ActionListener {
     @Override
     public void paintComponent(Graphics g) {
         super.paintComponent(g);
-
         // Draws background
         Graphics2D g2d = (Graphics2D)g;
         try {
@@ -74,8 +81,57 @@ public class Game extends JPanel implements ActionListener {
     // This method is called every time the game updates
     @Override
     public void actionPerformed(ActionEvent e) {
+        if (Menu.indicator == 1) {
+            rightPaddle.y += yVel;
+        }
+        else {
+            if (indicator == 1) {
+                leftPaddle.y += yVel;
+            }
+            else {
+                rightPaddle.y += yVel;
+            }
 
-
+        }
         repaint(); // Leave me at the bottom!
+    }
+
+    public void up() {
+        yVel = -6;
+    }
+
+    public void down() {
+        yVel = 6;
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        int key = e.getKeyCode();
+        if (key == KeyEvent.VK_UP) {
+            up();
+            indicator = 0;
+        }
+        else if (key == KeyEvent.VK_DOWN) {
+            down();
+            indicator = 0;
+        }
+        else if (key == KeyEvent.VK_W) {
+            up();
+            indicator = 1;
+        }
+        else if (key == KeyEvent.VK_S) {
+            down();
+            indicator = 1;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        yVel = 0;
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
     }
 }

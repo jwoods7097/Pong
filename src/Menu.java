@@ -10,6 +10,7 @@ public class Menu extends JPanel {
 
     JButton b1;
     JButton b2;
+    public static int indicator = 0;
 
     public Menu(Window currentWindow) {
         this.setLayout(null);
@@ -25,6 +26,7 @@ public class Menu extends JPanel {
             currentWindow.invalidate();
             currentWindow.validate();
             this.setVisible(false);
+            indicator = 1;
         });
         this.add(b1);
 
@@ -34,6 +36,12 @@ public class Menu extends JPanel {
         b2.setBorder(null);
         b2.setBackground(Color.BLACK);
         b2.setBounds(352, 481, 320, 128);
+        b2.addActionListener(e -> {
+            currentWindow.setPanel(Window.Panels.GAME);
+            currentWindow.invalidate();
+            currentWindow.validate();
+            this.setVisible(false);
+        });
         this.add(b2);
     }
 
