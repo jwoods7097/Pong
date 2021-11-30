@@ -3,10 +3,12 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import java.io.File;
 import java.io.IOException;
 
-public class Game extends JPanel implements ActionListener {
+public class Game extends JPanel implements KeyListener, ActionListener {
 
     JLabel p1;
     JLabel p2;
@@ -27,6 +29,9 @@ public class Game extends JPanel implements ActionListener {
 
         p1Score = 0;
         p2Score = 0;
+
+        setFocusable(true);
+        this.addKeyListener(this);
 
         this.setLayout(null);
         p1 = new JLabel("" + p1Score);
@@ -56,7 +61,7 @@ public class Game extends JPanel implements ActionListener {
         // Draws background
         Graphics2D g2d = (Graphics2D)g;
         try {
-            Image background = ImageIO.read(new File("images/game_background.png"));
+            Image background = ImageIO.read(getClass().getResource("/resources/game_background.png"));
             g2d.drawImage(background, 0, 0, this);
         } catch (IOException e) {
             System.out.println("Could not load background!");
@@ -74,8 +79,40 @@ public class Game extends JPanel implements ActionListener {
     // This method is called every time the game updates
     @Override
     public void actionPerformed(ActionEvent e) {
-
-
         repaint(); // Leave me at the bottom!
+    }
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+        System.out.println("TEST");
+        int key = e.getKeyCode();
+
+        if (key == KeyEvent.VK_UP) {
+            rightPaddle.y += -5;
+        }
+        else if (key == KeyEvent.VK_DOWN) {
+            rightPaddle.y += 5;
+        }
+        else if (key == KeyEvent.VK_W) {
+            leftPaddle.y += -5;
+        }
+        else if (key == KeyEvent.VK_S) {
+            leftPaddle.y += 5;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+
+    }
+
+    @Override
+    public void setFocusable(boolean b) {
+        super.setFocusable(b);
     }
 }
