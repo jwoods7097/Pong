@@ -43,7 +43,7 @@ public class Game extends JPanel implements ActionListener {
         p2.setForeground(Color.white);
         this.add(p2);
 
-        ball = new Ball();
+        ball = new Ball(((Window.WINDOW_WIDTH/2) - Ball.RADIUS), ((Window.WINDOW_HEIGHT/2) - Ball.RADIUS));
         leftPaddle = new Paddle(0);
         rightPaddle = new Paddle(Window.WINDOW_WIDTH - Paddle.WIDTH);
     }
