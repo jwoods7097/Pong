@@ -5,8 +5,8 @@ public class Paddle {
     public static final int HEIGHT = 100;
     public static final int WIDTH = 15;
 
-    private int x;
-    private int y;
+    int x;
+    int y;
 
     Paddle(int x) {
         this.x = x;
