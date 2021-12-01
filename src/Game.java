@@ -79,6 +79,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     // This method is called every time the game updates
     @Override
     public void actionPerformed(ActionEvent e) {
+        ball.move(leftPaddle, rightPaddle);
         repaint(); // Leave me at the bottom!
     }
 
@@ -93,16 +94,16 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_UP) {
-            rightPaddle.y += -5;
+            rightPaddle.y += -10;
         }
         else if (key == KeyEvent.VK_DOWN) {
-            rightPaddle.y += 5;
+            rightPaddle.y += 10;
         }
         else if (key == KeyEvent.VK_W) {
-            leftPaddle.y += -5;
+            leftPaddle.y += -10;
         }
         else if (key == KeyEvent.VK_S) {
-            leftPaddle.y += 5;
+            leftPaddle.y += 10;
         }
     }
 
@@ -115,4 +116,5 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public void setFocusable(boolean b) {
         super.setFocusable(b);
     }
+
 }
