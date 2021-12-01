@@ -47,7 +47,7 @@ public class Ball {
         g.fillOval(this.x, this.y, RADIUS * 2, RADIUS * 2);
     }
 
-    public void move(Paddle left, Paddle right) {
+    public void move(Paddle left, Paddle right, int p1, int p2) {
 
         this.x += directionX*4*this.multiplier;
         this.y += directionY*4;
@@ -55,10 +55,14 @@ public class Ball {
             this.multiplier += .05;
             setXDir(1);
         }
+        else if (this.x > left.WIDTH)
+            p1 += 1;
         if (this.x >= (Window.WINDOW_WIDTH - RADIUS*2 - right.WIDTH) && this.x < Window.WINDOW_WIDTH && ((this.y > right.y) && (this.y < (right.y + right.HEIGHT)))) {
             this.multiplier += .05;
             setXDir(-1);
         }
+        else if (this.x < 0)
+            p2 += 1;
         if (this.y >= Window.WINDOW_HEIGHT - RADIUS*2) {
             setYDir(-1);
         }

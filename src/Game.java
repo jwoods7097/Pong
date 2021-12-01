@@ -79,7 +79,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     // This method is called every time the game updates
     @Override
     public void actionPerformed(ActionEvent e) {
-        ball.move(leftPaddle, rightPaddle);
+        ball.move(leftPaddle, rightPaddle, p1Score, p2Score);
         repaint(); // Leave me at the bottom!
     }
 
