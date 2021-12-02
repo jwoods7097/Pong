@@ -13,10 +13,13 @@ public class Ball {
     double multiplier = 1;
 
     public Ball(int x, int y) {
-        Random r = new Random();
         this.x = x;
         this.y = y;
+        this.randDirection();
+    }
 
+    public void randDirection() {
+        Random r = new Random();
         int randX = r.nextInt(2);
         if (randX == 0) {
             randX--;

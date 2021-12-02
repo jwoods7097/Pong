@@ -80,6 +80,18 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ball.move(leftPaddle, rightPaddle, p1Score, p2Score);
+        if (ball.x > 1024) {
+            p1Score += 1;
+            ball.x = 512;
+            ball.y = 384;
+            ball.randDirection();
+        }
+        else if (ball.x < 0) {
+            p2Score += 1;
+            ball.x = 512;
+            ball.y = 384;
+            ball.randDirection();
+        }
         repaint(); // Leave me at the bottom!
     }
 
@@ -90,7 +102,6 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("TEST");
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_UP) {
