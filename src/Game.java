@@ -48,7 +48,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         p2.setForeground(Color.white);
         this.add(p2);
 
-        ball = new Ball();
+        ball = new Ball(((Window.WINDOW_WIDTH/2) - Ball.RADIUS), ((Window.WINDOW_HEIGHT/2) - Ball.RADIUS));
         leftPaddle = new Paddle(0);
         rightPaddle = new Paddle(Window.WINDOW_WIDTH - Paddle.WIDTH);
     }
@@ -79,6 +79,19 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     // This method is called every time the game updates
     @Override
     public void actionPerformed(ActionEvent e) {
+        ball.move(leftPaddle, rightPaddle, p1Score, p2Score);
+        if (ball.x > 1024) {
+            p1Score += 1;
+            ball.x = 512;
+            ball.y = 384;
+            ball.randDirection();
+        }
+        else if (ball.x < 0) {
+            p2Score += 1;
+            ball.x = 512;
+            ball.y = 384;
+            ball.randDirection();
+        }
         repaint(); // Leave me at the bottom!
     }
 
@@ -89,20 +102,19 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     @Override
     public void keyPressed(KeyEvent e) {
-        System.out.println("TEST");
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_UP) {
-            rightPaddle.y += -5;
+            rightPaddle.y += -10;
         }
         else if (key == KeyEvent.VK_DOWN) {
-            rightPaddle.y += 5;
+            rightPaddle.y += 10;
         }
         else if (key == KeyEvent.VK_W) {
-            leftPaddle.y += -5;
+            leftPaddle.y += -10;
         }
         else if (key == KeyEvent.VK_S) {
-            leftPaddle.y += 5;
+            leftPaddle.y += 10;
         }
     }
 
@@ -115,4 +127,5 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public void setFocusable(boolean b) {
         super.setFocusable(b);
     }
+
 }
