@@ -10,6 +10,7 @@ import java.io.IOException;
 
 public class Game extends JPanel implements KeyListener, ActionListener {
 
+    Image background;
     JLabel p1;
     JLabel p2;
 
@@ -30,8 +31,14 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         p1Score = 0;
         p2Score = 0;
 
-        setFocusable(true);
+        this.setFocusable(true);
         this.addKeyListener(this);
+
+        try {
+            background = ImageIO.read(getClass().getResource("/resources/game_background.png"));
+        } catch (IOException e) {
+            System.out.println("Could not load background!");
+        }
 
         this.setLayout(null);
         p1 = new JLabel("" + p1Score);
@@ -60,12 +67,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
         // Draws background
         Graphics2D g2d = (Graphics2D)g;
-        try {
-            Image background = ImageIO.read(getClass().getResource("/resources/game_background.png"));
-            g2d.drawImage(background, 0, 0, this);
-        } catch (IOException e) {
-            System.out.println("Could not load background!");
-        }
+        g2d.drawImage(background, 0, 0, this);
 
         p1.setText("" + p1Score);
         p2.setText("" + p2Score);
@@ -92,9 +94,12 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             ball.y = 384;
             ball.randDirection();
         }
+        leftPaddle.onUpdate();
+        rightPaddle.onUpdate();
         repaint(); // Leave me at the bottom!
     }
 
+    // This method is only here because the KeyListener interface requires it
     @Override
     public void keyTyped(KeyEvent e) {
 
@@ -105,27 +110,29 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         int key = e.getKeyCode();
 
         if (key == KeyEvent.VK_UP) {
-            rightPaddle.y += -10;
+            rightPaddle.moveUp();
         }
-        else if (key == KeyEvent.VK_DOWN) {
-            rightPaddle.y += 10;
+        if (key == KeyEvent.VK_DOWN) {
+            rightPaddle.moveDown();
         }
-        else if (key == KeyEvent.VK_W) {
-            leftPaddle.y += -10;
+        if (key == KeyEvent.VK_W) {
+            leftPaddle.moveUp();
         }
-        else if (key == KeyEvent.VK_S) {
-            leftPaddle.y += 10;
+        if (key == KeyEvent.VK_S) {
+            leftPaddle.moveDown();
         }
     }
 
     @Override
     public void keyReleased(KeyEvent e) {
+        int key = e.getKeyCode();
 
-    }
-
-    @Override
-    public void setFocusable(boolean b) {
-        super.setFocusable(b);
+        if (key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN) {
+            rightPaddle.stop();
+        }
+        if (key == KeyEvent.VK_W || key == KeyEvent.VK_S) {
+            leftPaddle.stop();
+        }
     }
 
 }
