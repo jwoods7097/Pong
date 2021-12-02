@@ -7,7 +7,7 @@ public class Paddle {
     private static final int MAX_SPEED = 10;
 
     private int x;
-    public int y;
+    private int y;
     private int speed;
 
     Paddle(int x) {
@@ -19,6 +19,14 @@ public class Paddle {
     public void draw(Graphics2D g) {
         g.setColor(Color.white);
         g.fillRect(x, y, WIDTH, HEIGHT);
+    }
+
+    public int getY() {
+        return y;
+    }
+
+    public int getCenteredY() {
+        return y + HEIGHT / 2;
     }
 
     public void moveUp() {

@@ -5,17 +5,24 @@ import java.util.Random;
 public class Ball {
 
     public static final int RADIUS = 10;
+    private static final int BASE_SPEED = 4;
 
-    int x = 0;
-    int y = 0;
-    double directionX = 0;
-    double directionY = 0;
-    double multiplier = 1;
+    private int x;
+    private int y;
+    private double directionX = 0;
+    private double directionY = 0;
+    private double multiplier = 1;
 
-    public Ball(int x, int y) {
-        this.x = x;
-        this.y = y;
-        this.randDirection();
+    public Ball() {
+        respawn();
+    }
+
+    public int getX() {
+        return x;
+    }
+
+    public int getY() {
+        return y;
     }
 
     public void randDirection() {
@@ -29,49 +36,39 @@ public class Ball {
             randY--;
         }
 
-        //int randX = r.nextInt(2);
-        //int randY = r.nextInt(2);
-
-        setXDir(randX);
-        setYDir(randY);
+        directionX = randX;
+        directionY = randY;
     }
-
-    public void setXDir(double i){
-        directionX = i;
-    }
-
-    public void setYDir(double i) {
-        directionY = i;
-    }
-
 
     public void draw(Graphics2D g) {
         g.setColor(Color.white);
         g.fillOval(this.x, this.y, RADIUS * 2, RADIUS * 2);
     }
 
-    public void move(Paddle left, Paddle right, int p1, int p2) {
+    public void move(Paddle left, Paddle right) {
 
-        this.x += directionX*4*this.multiplier;
-        this.y += directionY*4;
-        if (this.x <= left.WIDTH && this.x > 0 && ((this.y > left.y) && (this.y < (left.y + left.HEIGHT)))) {
-            this.multiplier += .05;
-            setXDir(1);
+        x += directionX * BASE_SPEED * multiplier;
+        y += directionY * BASE_SPEED;
+        if (x <= Paddle.WIDTH && x > 0 && (y > left.getY() && y < left.getY() + Paddle.HEIGHT)) {
+            multiplier += .05;
+            directionX = 1;
         }
-        else if (this.x > left.WIDTH)
-            p1 += 1;
-        if (this.x >= (Window.WINDOW_WIDTH - RADIUS*2 - right.WIDTH) && this.x < Window.WINDOW_WIDTH && ((this.y > right.y) && (this.y < (right.y + right.HEIGHT)))) {
-            this.multiplier += .05;
-            setXDir(-1);
+        if (x >= Window.WINDOW_WIDTH - RADIUS*2 - Paddle.WIDTH && x < Window.WINDOW_WIDTH && (y > right.getY() && y < right.getY() + Paddle.HEIGHT)) {
+            multiplier += .05;
+            directionX = -1;
         }
-        else if (this.x < 0)
-            p2 += 1;
-        if (this.y >= Window.WINDOW_HEIGHT - RADIUS*2) {
-            setYDir(-1);
+        if (y >= Window.WINDOW_HEIGHT - RADIUS*2) {
+            directionY = -1;
         }
-        if (this.y <= 0) {
-            setYDir(1);
+        if (y <= 0) {
+            directionY = 1;
         }
+    }
+    
+    public void respawn() {
+        x = Window.WINDOW_WIDTH / 2 - RADIUS;
+        y = Window.WINDOW_HEIGHT / 2 - RADIUS;
+        randDirection();
     }
 
 }

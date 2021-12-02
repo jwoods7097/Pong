@@ -5,10 +5,14 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
-import java.io.File;
 import java.io.IOException;
 
 public class Game extends JPanel implements KeyListener, ActionListener {
+
+    public enum Mode {
+        SINGLEPLAYER,
+        MULTIPLAYER,
+    }
 
     Image background;
     JLabel p1;
@@ -17,17 +21,20 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     // Game updates 60 times per second, can change if needed
     Timer timer = new Timer(1000 / 60, this);
 
+    private Mode gamemode;
     private Ball ball;
     private Paddle leftPaddle;
     private Paddle rightPaddle;
+    private AI ai;
 
     private int p1Score;
     private int p2Score;
 
     // Initial setup of graphics and game settings
-    public Game() {
+    public Game(Mode mode) {
         timer.start();
 
+        gamemode = mode;
         p1Score = 0;
         p2Score = 0;
 
@@ -55,9 +62,12 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         p2.setForeground(Color.white);
         this.add(p2);
 
-        ball = new Ball(((Window.WINDOW_WIDTH/2) - Ball.RADIUS), ((Window.WINDOW_HEIGHT/2) - Ball.RADIUS));
+        ball = new Ball();
         leftPaddle = new Paddle(0);
         rightPaddle = new Paddle(Window.WINDOW_WIDTH - Paddle.WIDTH);
+        if(gamemode == Mode.SINGLEPLAYER) {
+            ai = new AI(rightPaddle, ball);
+        }
     }
 
     // Paints background and game objects
@@ -81,18 +91,17 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     // This method is called every time the game updates
     @Override
     public void actionPerformed(ActionEvent e) {
-        ball.move(leftPaddle, rightPaddle, p1Score, p2Score);
-        if (ball.x > 1024) {
+        ball.move(leftPaddle, rightPaddle);
+        if (ball.getX() > Window.WINDOW_WIDTH) {
             p1Score += 1;
-            ball.x = 512;
-            ball.y = 384;
-            ball.randDirection();
+            ball.respawn();
         }
-        else if (ball.x < 0) {
+        else if (ball.getX() < 0) {
             p2Score += 1;
-            ball.x = 512;
-            ball.y = 384;
-            ball.randDirection();
+            ball.respawn();
+        }
+        if(gamemode == Mode.SINGLEPLAYER) {
+            ai.onUpdate(p1Score, p2Score);
         }
         leftPaddle.onUpdate();
         rightPaddle.onUpdate();
@@ -109,11 +118,13 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_UP) {
-            rightPaddle.moveUp();
-        }
-        if (key == KeyEvent.VK_DOWN) {
-            rightPaddle.moveDown();
+        if(gamemode == Mode.MULTIPLAYER) {
+            if (key == KeyEvent.VK_UP) {
+                rightPaddle.moveUp();
+            }
+            if (key == KeyEvent.VK_DOWN) {
+                rightPaddle.moveDown();
+            }
         }
         if (key == KeyEvent.VK_W) {
             leftPaddle.moveUp();
@@ -127,7 +138,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
 
-        if (key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN) {
+        if(gamemode == Mode.MULTIPLAYER && (key == KeyEvent.VK_UP || key == KeyEvent.VK_DOWN)) {
             rightPaddle.stop();
         }
         if (key == KeyEvent.VK_W || key == KeyEvent.VK_S) {

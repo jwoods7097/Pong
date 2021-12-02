@@ -21,7 +21,7 @@ public class Menu extends JPanel {
         b1.setBackground(Color.BLACK);
         b1.setBounds(352, 267, 320, 128);
         b1.addActionListener(e -> {
-            currentWindow.setPanel(Window.Panels.GAME);
+            currentWindow.setPanel(new Game(Game.Mode.SINGLEPLAYER));
             currentWindow.invalidate();
             currentWindow.validate();
             this.setVisible(false);
@@ -34,6 +34,12 @@ public class Menu extends JPanel {
         b2.setBorder(null);
         b2.setBackground(Color.BLACK);
         b2.setBounds(352, 481, 320, 128);
+        b2.addActionListener(e -> {
+            currentWindow.setPanel(new Game(Game.Mode.SINGLEPLAYER));
+            currentWindow.invalidate();
+            currentWindow.validate();
+            this.setVisible(false);
+        });
         this.add(b2);
     }
 
