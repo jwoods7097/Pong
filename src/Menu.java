@@ -35,7 +35,7 @@ public class Menu extends JPanel {
         b2.setBackground(Color.BLACK);
         b2.setBounds(352, 481, 320, 128);
         b2.addActionListener(e -> {
-            currentWindow.setPanel(new Game(Game.Mode.SINGLEPLAYER));
+            currentWindow.setPanel(new Game(Game.Mode.MULTIPLAYER));
             currentWindow.invalidate();
             currentWindow.validate();
             this.setVisible(false);

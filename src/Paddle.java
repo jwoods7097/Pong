@@ -16,27 +16,33 @@ public class Paddle {
         stop();
     }
 
+    // Draws paddles
     public void draw(Graphics2D g) {
         g.setColor(Color.white);
         g.fillRect(x, y, WIDTH, HEIGHT);
     }
 
+    // Returns Y
     public int getY() {
         return y;
     }
 
+    // Returns Y centered
     public int getCenteredY() {
         return y + HEIGHT / 2;
     }
 
+    // Moves the paddle up
     public void moveUp() {
         speed = -MAX_SPEED;
     }
 
+    // Moves the paddle down
     public void moveDown() {
         speed = MAX_SPEED;
     }
 
+    // Stops the paddle
     public void stop() {
         speed = 0;
     }
