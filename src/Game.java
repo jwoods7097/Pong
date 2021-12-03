@@ -92,6 +92,8 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         ball.move(leftPaddle, rightPaddle);
+
+        // Updates the score if the ball crosses the window border
         if (ball.getX() > Window.WINDOW_WIDTH) {
             p1Score += 1;
             ball.respawn();
@@ -114,6 +116,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
 
     }
 
+    // This method is called everytime a key is pressed
     @Override
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
@@ -134,6 +137,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         }
     }
 
+    // This method is called everytime a key is released after being pressed
     @Override
     public void keyReleased(KeyEvent e) {
         int key = e.getKeyCode();
