@@ -65,11 +65,12 @@ public class Ball {
 
         x += directionX * BASE_SPEED * multiplier;
         y += directionY * BASE_SPEED;
-        if (x <= Paddle.WIDTH && x > 0 && (y > left.getY() && y < left.getY() + Paddle.HEIGHT)) {
+
+        if (x <= Paddle.WIDTH && x > 0 && ((y+RADIUS) > left.getY() && y < left.getY() + Paddle.HEIGHT)) {
             multiplier += .05;
             directionX = 1;
         }
-        if (x >= Window.WINDOW_WIDTH - RADIUS*2 - Paddle.WIDTH && x < Window.WINDOW_WIDTH && (y > right.getY() && y < right.getY() + Paddle.HEIGHT)) {
+        if (x >= Window.WINDOW_WIDTH - RADIUS*2 - Paddle.WIDTH && x < Window.WINDOW_WIDTH && ((y+RADIUS) > right.getY() && y < right.getY() + Paddle.HEIGHT)) {
             multiplier += .05;
             directionX = -1;
         }
