@@ -1,4 +1,6 @@
 import javax.imageio.ImageIO;
+import javax.sound.sampled.LineUnavailableException;
+import javax.sound.sampled.UnsupportedAudioFileException;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -91,7 +93,9 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     // This method is called every time the game updates
     @Override
     public void actionPerformed(ActionEvent e) {
+
         ball.move(leftPaddle, rightPaddle);
+
         if (ball.getX() > Window.WINDOW_WIDTH) {
             p1Score += 1;
             ball.respawn();
