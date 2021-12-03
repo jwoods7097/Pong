@@ -21,6 +21,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     // Game updates 60 times per second, can change if needed
     Timer timer = new Timer(1000 / 60, this);
 
+    private Window window;
     private Mode gamemode;
     private Ball ball;
     private Paddle leftPaddle;
@@ -31,9 +32,10 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     private int p2Score;
 
     // Initial setup of graphics and game settings
-    public Game(Mode mode) {
+    public Game(Mode mode, Window currentWindow) {
         timer.start();
 
+        window = currentWindow;
         gamemode = mode;
         p1Score = 0;
         p2Score = 0;
@@ -102,11 +104,25 @@ public class Game extends JPanel implements KeyListener, ActionListener {
             p2Score += 1;
             ball.respawn();
         }
+
+        // Switch to Winner panel when a player reaches 10 points
+        if(p1Score >= 10) {
+            timer.stop();
+            window.setPanel(new Winner(1, window));
+            this.setVisible(false);
+        } else if(p2Score >= 10) {
+            timer.stop();
+            window.setPanel(new Winner(2, window));
+            this.setVisible(false);
+        }
+
+        // Run update methods of game objects
         if(gamemode == Mode.SINGLEPLAYER) {
             ai.onUpdate(p1Score, p2Score);
         }
         leftPaddle.onUpdate();
         rightPaddle.onUpdate();
+
         repaint(); // Leave me at the bottom!
     }
 

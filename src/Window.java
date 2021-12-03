@@ -23,5 +23,7 @@ public class Window extends JFrame {
     public void setPanel(JPanel panel) {
         panel.setPreferredSize(new Dimension(WINDOW_WIDTH, WINDOW_HEIGHT));
         this.add(panel);
+        this.invalidate();
+        this.validate();
     }
 }
