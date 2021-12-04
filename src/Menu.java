@@ -1,9 +1,6 @@
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.io.File;
 import java.io.IOException;
 
 public class Menu extends JPanel {
@@ -21,9 +18,7 @@ public class Menu extends JPanel {
         b1.setBackground(Color.BLACK);
         b1.setBounds(352, 267, 320, 128);
         b1.addActionListener(e -> {
-            currentWindow.setPanel(new Game(Game.Mode.SINGLEPLAYER));
-            currentWindow.invalidate();
-            currentWindow.validate();
+            currentWindow.setPanel(new Game(Game.Mode.SINGLEPLAYER, currentWindow));
             this.setVisible(false);
         });
         this.add(b1);
@@ -35,9 +30,7 @@ public class Menu extends JPanel {
         b2.setBackground(Color.BLACK);
         b2.setBounds(352, 481, 320, 128);
         b2.addActionListener(e -> {
-            currentWindow.setPanel(new Game(Game.Mode.SINGLEPLAYER));
-            currentWindow.invalidate();
-            currentWindow.validate();
+            currentWindow.setPanel(new Game(Game.Mode.MULTIPLAYER, currentWindow));
             this.setVisible(false);
         });
         this.add(b2);
