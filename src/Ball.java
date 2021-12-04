@@ -1,8 +1,4 @@
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.Clip;
 import java.awt.*;
-import java.io.File;
-import java.net.URL;
 import java.util.Random;
 /*
 This class is in charge of the ball object. The multiple methods in this class handle collision with the upper and lower
@@ -43,6 +39,11 @@ public class Ball {
     // Returns the current y value
     public int getY() {
         return y;
+    }
+
+    // Returns the y value of the center of the ball
+    public int getCenteredY() {
+        return y + RADIUS;
     }
   
     // Creates a random direction for "kick-off" of the ball at the beginning of every point
@@ -97,4 +98,5 @@ public class Ball {
         randDirection();
         multiplier = 1;
     }
+
 }

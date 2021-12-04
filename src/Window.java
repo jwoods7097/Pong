@@ -14,7 +14,6 @@ public class Window extends JFrame {
         this.setResizable(false);
         this.setBackground(Color.BLACK);
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        //this.setLocationRelativeTo(null);
         this.setVisible(true);
         this.pack();
     }

@@ -27,7 +27,7 @@ public class Paddle {
         return y;
     }
 
-    // Returns Y centered
+    // Returns the y value of the center of the paddle
     public int getCenteredY() {
         return y + HEIGHT / 2;
     }
@@ -47,6 +47,7 @@ public class Paddle {
         speed = 0;
     }
 
+    // This method is called every time the game updates
     public void onUpdate() {
         if(y + speed < 0 || y + speed + HEIGHT > Window.WINDOW_HEIGHT) {
             stop();

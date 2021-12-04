@@ -30,6 +30,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     private Paddle rightPaddle;
     private AI ai;
 
+    public static final int MAX_SCORE = 10;
     private int p1Score;
     private int p2Score;
 
@@ -109,11 +110,11 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         }
 
         // Switch to Winner panel when a player reaches 10 points
-        if(p1Score >= 10) {
+        if(p1Score >= MAX_SCORE) {
             timer.stop();
             window.setPanel(new Winner(1, window));
             this.setVisible(false);
-        } else if(p2Score >= 10) {
+        } else if(p2Score >= MAX_SCORE) {
             timer.stop();
             window.setPanel(new Winner(2, window));
             this.setVisible(false);
@@ -140,6 +141,7 @@ public class Game extends JPanel implements KeyListener, ActionListener {
     public void keyPressed(KeyEvent e) {
         int key = e.getKeyCode();
 
+        // Move paddles
         if(gamemode == Mode.MULTIPLAYER) {
             if (key == KeyEvent.VK_UP) {
                 rightPaddle.moveUp();
@@ -153,6 +155,13 @@ public class Game extends JPanel implements KeyListener, ActionListener {
         }
         if (key == KeyEvent.VK_S) {
             leftPaddle.moveDown();
+        }
+
+        // Go back to menu if escape is pressed
+        if(key == KeyEvent.VK_ESCAPE) {
+            timer.stop();
+            window.setPanel(new Menu(window));
+            this.setVisible(false);
         }
     }
 
